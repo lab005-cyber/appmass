@@ -1,0 +1,19 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SocialMediaPosting",
+  "headline": "appmass",
+  "description": "appmass",
+  "datePublished": "2026-01-01",
+  "author": {
+    "@type": "Organization",
+    "name": "appmass"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "appmass"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://appmass.com"
+  }
+}

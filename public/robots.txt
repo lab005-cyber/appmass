@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://appmass.com/sitemap.xml

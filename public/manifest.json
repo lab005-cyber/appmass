@@ -1,0 +1,16 @@
+{
+  "name": "appmass",
+  "short_name": "appmass",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f3ee",
+  "theme_color": "#f4f3ee",
+  "description": "appmass",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

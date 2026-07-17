@@ -1,0 +1,15 @@
+{
+  "title": "appmass",
+  "description": "appmass",
+  "keywords": ["appmass"],
+  "author": "appmass",
+  "viewport": "width=device-width, initial-scale=1, viewport-fit=cover",
+  "theme-color": "#f4f3ee",
+  "apple-mobile-web-app-capable": "yes",
+  "apple-mobile-web-app-status-bar-style": "default",
+  "apple-mobile-web-app-title": "appmass",
+  "application-name": "appmass",
+  "mobile-web-app-capable": "yes",
+  "msapplication-TileColor": "#f4f3ee",
+  "msapplication-TileImage": "/ms-icon-144x144.png"
+}

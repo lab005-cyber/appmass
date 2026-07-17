@@ -1,0 +1,15 @@
+{
+  "name": "appmass",
+  "framework": "expo",
+  "buildCommand": "npx expo export:web",
+  "outputDirectory": "web-build",
+  "installCommand": "npm install",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "env": {
+    "EXPO_PUBLIC_APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+    "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "6a574108002067b4d857",
+    "EXPO_PUBLIC_APP_NAME": "appmass"
+  }
+}

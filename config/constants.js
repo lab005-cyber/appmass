@@ -1,0 +1,9 @@
+export const APP_NAME = 'appmass';
+export const PRIMARY_COLOR = '#f4f3ee';
+export const ACCENT_COLOR = '#c15f3c';
+export const VERIFICATION_BADGE_COLOR = '#c15f3c';
+export const MAX_POST_IMAGES = 10;
+export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+export const STORY_DURATION_HOURS = 24;
+export const APPWRITE_ENDPOINT = process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT;
+export const APPWRITE_PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID;
