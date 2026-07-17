@@ -1,15 +1,18 @@
 {
   "name": "appmass",
   "framework": "expo",
-  "buildCommand": "npx expo export:web",
-  "outputDirectory": "web-build",
-  "installCommand": "npm install",
+  "buildCommand": "npx expo export --platform web",
+  "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "env": {
     "EXPO_PUBLIC_APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
     "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "6a574108002067b4d857",
+    "EXPO_PUBLIC_APPWRITE_DATABASE_ID": "6a5858730027a6cc77ef",
+    "EXPO_PUBLIC_APPWRITE_POSTS_COLLECTION_ID": "posts",
+    "EXPO_PUBLIC_APPWRITE_BUCKET_ID": "6a58737a002089309da1",
     "EXPO_PUBLIC_APP_NAME": "appmass"
   }
 }

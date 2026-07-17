@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "appwrite": {
+      "type": "local",
+      "command": [
+        "C:\\Users\\student\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\Scripts\\uvx.exe",
+        "mcp-server-appwrite"
+      ],
+      "enabled": true,
+      "environment": {
+        "APPWRITE_PROJECT_ID": "6a574108002067b4d857",
+        "APPWRITE_API_KEY": "standard_ce4f609771d5df0db7a29903b3d31ac1ec1fd680331c8e691f896ab68638e6f9e295db775b516c028b17d76d9d15d5e072b4405d8631431681d704fba912f83ecc0c20ee059847e7d6591d4372397d5122979941406dc0391a2b60d2076d0c0d44c769d64e71c7a9d8954edd3c7c0ed293115dce273179beaa7998fbbe22d07e",
+        "APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1"
+      }
+    }
+  }
+}
