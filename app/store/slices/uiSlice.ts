@@ -23,6 +23,9 @@ const uiSlice = createSlice({
     },
     completeOnboarding: (state) => {
       state.onboardingComplete = true;
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('onboardingComplete', 'true');
+      }
     },
     setSplashDone: (state) => {
       state.splashDone = true;

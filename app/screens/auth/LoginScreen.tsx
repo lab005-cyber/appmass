@@ -17,6 +17,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { clearError } from '../../store/slices/authSlice';
 import { AuthStackParamList } from '../../navigation/AuthNavigator';
+import { loginWithGoogle } from '../../services/auth';
 
 export function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -94,6 +95,20 @@ export function LoginScreen() {
                 <Text style={styles.loginButtonText}>Log In</Text>
               )}
             </TouchableOpacity>
+
+            <View style={styles.divider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>OR</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            <TouchableOpacity
+              style={styles.googleButton}
+              onPress={() => loginWithGoogle()}
+            >
+              <Text style={styles.googleIcon}>G</Text>
+              <Text style={styles.googleButtonText}>Continue with Google</Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.footer}>
@@ -163,6 +178,43 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
     fontSize: 14,
     color: '#c15f3c',
+  },
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginVertical: 8,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#ddd',
+  },
+  dividerText: {
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 12,
+    color: '#999',
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    gap: 10,
+  },
+  googleIcon: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#4285F4',
+  },
+  googleButtonText: {
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 15,
+    color: '#333',
   },
   loginButton: {
     backgroundColor: '#c15f3c',

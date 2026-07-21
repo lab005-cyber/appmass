@@ -60,6 +60,27 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Login failed';
       })
+      .addCase(signupUser.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(signupUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(signupUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Signup failed';
+      })
+      .addCase(fetchCurrentUser.pending, (state) => { state.loading = true; })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchCurrentUser.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
         state.isAuthenticated = false;

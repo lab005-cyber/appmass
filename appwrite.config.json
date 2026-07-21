@@ -1,3 +1,21 @@
 {
-    "projectId": "6a574108002067b4d857"
+    "projectId": "6a574108002067b4d857",
+    "sites": [
+        {
+            "$id": "appmass2",
+            "name": "appmass",
+            "path": ".",
+            "framework": "react",
+            "adapter": "static",
+            "installCommand": "npm install --legacy-peer-deps",
+            "buildCommand": "npx expo export --platform web",
+            "outputDirectory": "dist",
+            "fallbackFile": "index.html",
+            "buildSpecification": "s-2vcpu-2gb",
+            "runtimeSpecification": "s-0.5vcpu-512mb",
+            "buildRuntime": "node-22",
+            "logging": true,
+            "timeout": 30
+        }
+    ]
 }
