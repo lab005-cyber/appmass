@@ -2,7 +2,7 @@
     "projectId": "6a574108002067b4d857",
     "sites": [
         {
-            "$id": "appmass2",
+            "$id": "appmasslive",
             "name": "appmass",
             "path": ".",
             "framework": "react",
