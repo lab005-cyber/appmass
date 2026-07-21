@@ -8,6 +8,7 @@ import client from './app/lib/appwrite';
 
 export default function App() {
   useEffect(() => {
+    if (typeof client.ping !== 'function') return;
     client.ping().then(() => {
       console.log('[appmass] Appwrite connected successfully');
     }).catch((err) => {

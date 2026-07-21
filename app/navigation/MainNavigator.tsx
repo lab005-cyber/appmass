@@ -11,6 +11,11 @@ import { ChatScreen } from '../screens/chat/ChatScreen';
 import { NotificationsScreen } from '../screens/notifications/NotificationsScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { EditProfileScreen } from '../screens/profile/EditProfileScreen';
+import { SettingsScreen } from '../screens/settings/SettingsScreen';
+import { PrivacyScreen } from '../screens/settings/PrivacyScreen';
+import { StoriesScreen } from '../screens/stories/StoriesScreen';
+import { CreateStoryScreen } from '../screens/stories/CreateStoryScreen';
+import { VoiceCallScreen } from '../screens/calls/VoiceCallScreen';
 
 export type MainTabParamList = {
   FeedTab: undefined;
@@ -25,16 +30,21 @@ export type FeedStackParamList = {
   Explore: undefined;
   PostDetail: { postId: string };
   CreatePost: undefined;
+  Stories: undefined;
+  CreateStory: undefined;
 };
 
 export type ChatStackParamList = {
   Conversations: undefined;
   Chat: { conversationId: string; userId: string };
+  VoiceCall: { userId: string; userName: string; incoming?: boolean };
 };
 
 export type ProfileStackParamList = {
   Profile: { userId?: string };
   EditProfile: undefined;
+  Settings: undefined;
+  Privacy: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -49,6 +59,8 @@ function FeedNavigator() {
       <FeedStack.Screen name="Explore" component={ExploreScreen} />
       <FeedStack.Screen name="PostDetail" component={PostDetailScreen} />
       <FeedStack.Screen name="CreatePost" component={CreatePostScreen} />
+      <FeedStack.Screen name="Stories" component={StoriesScreen} />
+      <FeedStack.Screen name="CreateStory" component={CreateStoryScreen} />
     </FeedStack.Navigator>
   );
 }
@@ -58,6 +70,7 @@ function ChatNavigator() {
     <ChatStack.Navigator screenOptions={{ headerShown: false }}>
       <ChatStack.Screen name="Conversations" component={ConversationsScreen} />
       <ChatStack.Screen name="Chat" component={ChatScreen} />
+      <ChatStack.Screen name="VoiceCall" component={VoiceCallScreen} />
     </ChatStack.Navigator>
   );
 }
@@ -67,6 +80,8 @@ function ProfileNavigator() {
     <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
       <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} />
+      <ProfileStack.Screen name="Settings" component={SettingsScreen} />
+      <ProfileStack.Screen name="Privacy" component={PrivacyScreen} />
     </ProfileStack.Navigator>
   );
 }

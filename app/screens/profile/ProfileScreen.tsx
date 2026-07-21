@@ -44,7 +44,7 @@ export function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
+        <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('Settings')}>
           <Settings size={22} color="#1a1a1a" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
