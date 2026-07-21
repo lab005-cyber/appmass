@@ -26,7 +26,10 @@ export async function loginWithGoogle() {
   const redirectUri = Platform.OS === 'web'
     ? window.location.origin
     : 'appmass://';
-  return account.createOAuth2Session('google', redirectUri, redirectUri);
+  const url = account.createOAuth2Session('google', redirectUri, redirectUri);
+  if (Platform.OS === 'web' && url) {
+    window.location.href = url.toString();
+  }
 }
 
 export function getOAuthCallbackParams(): { userId?: string; secret?: string } {

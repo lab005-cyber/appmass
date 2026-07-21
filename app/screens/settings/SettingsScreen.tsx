@@ -8,6 +8,9 @@ import {
   Switch,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from '../../navigation/MainNavigator';
 import {
   ChevronRight,
   User,
@@ -41,6 +44,7 @@ interface SettingsSection {
 }
 
 export function SettingsScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
   const [notifications, setNotifications] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -52,6 +56,7 @@ export function SettingsScreen() {
           icon: <User size={20} color="#6b7280" />,
           label: 'Edit Profile',
           type: 'navigate',
+          onPress: () => navigation.navigate('EditProfile'),
         },
         {
           icon: <Lock size={20} color="#6b7280" />,
@@ -62,6 +67,7 @@ export function SettingsScreen() {
           icon: <Eye size={20} color="#6b7280" />,
           label: 'Privacy',
           type: 'navigate',
+          onPress: () => navigation.navigate('Privacy'),
         },
       ],
     },
