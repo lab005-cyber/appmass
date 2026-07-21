@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -48,7 +49,23 @@ export function ProfileScreen() {
           <Settings size={22} color="#1a1a1a" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
-        <TouchableOpacity style={styles.headerButton}>
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={() => {
+            if (isOwnProfile) {
+              Alert.alert('Profile Options', undefined, [
+                { text: 'Share Profile', onPress: () => Alert.alert('Coming Soon', 'Share is not yet available.') },
+                { text: 'Cancel', style: 'cancel' },
+              ]);
+            } else {
+              Alert.alert('User Options', undefined, [
+                { text: 'Share Profile', onPress: () => Alert.alert('Coming Soon', 'Share is not yet available.') },
+                { text: 'Report User', style: 'destructive', onPress: () => Alert.alert('Coming Soon', 'Reporting is not yet available.') },
+                { text: 'Cancel', style: 'cancel' },
+              ]);
+            }
+          }}
+        >
           <MoreHorizontal size={22} color="#1a1a1a" />
         </TouchableOpacity>
       </View>
@@ -85,15 +102,15 @@ export function ProfileScreen() {
           </View>
 
           <View style={styles.statsRow}>
-            <TouchableOpacity style={styles.statItem}>
+            <TouchableOpacity style={styles.statItem} onPress={() => Alert.alert('Coming Soon', 'Posts list is not yet available.')}>
               <Text style={styles.statValue}>42</Text>
               <Text style={styles.statLabel}>Posts</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.statItem}>
+            <TouchableOpacity style={styles.statItem} onPress={() => Alert.alert('Coming Soon', 'Followers list is not yet available.')}>
               <Text style={styles.statValue}>1.2k</Text>
               <Text style={styles.statLabel}>Followers</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.statItem}>
+            <TouchableOpacity style={styles.statItem} onPress={() => Alert.alert('Coming Soon', 'Following list is not yet available.')}>
               <Text style={styles.statValue}>380</Text>
               <Text style={styles.statLabel}>Following</Text>
             </TouchableOpacity>

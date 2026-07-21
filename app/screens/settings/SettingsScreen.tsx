@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Switch,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -62,6 +63,7 @@ export function SettingsScreen() {
           icon: <Lock size={20} color="#6b7280" />,
           label: 'Change Password',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Change Password is not yet available.'),
         },
         {
           icon: <Eye size={20} color="#6b7280" />,
@@ -92,6 +94,7 @@ export function SettingsScreen() {
           icon: <Globe size={20} color="#6b7280" />,
           label: 'Language',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Language settings are not yet available.'),
         },
       ],
     },
@@ -102,16 +105,19 @@ export function SettingsScreen() {
           icon: <Shield size={20} color="#6b7280" />,
           label: 'Two-Factor Auth',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Two-Factor Authentication is not yet available.'),
         },
         {
           icon: <Monitor size={20} color="#6b7280" />,
           label: 'Active Sessions',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Active Sessions is not yet available.'),
         },
         {
           icon: <Users size={20} color="#6b7280" />,
           label: 'Blocked Users',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Blocked Users is not yet available.'),
         },
       ],
     },
@@ -122,16 +128,19 @@ export function SettingsScreen() {
           icon: <HelpCircle size={20} color="#6b7280" />,
           label: 'Help Center',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Help Center is not yet available.'),
         },
         {
           icon: <AlertTriangle size={20} color="#6b7280" />,
           label: 'Report a Problem',
           type: 'navigate',
+          onPress: () => Alert.alert('Coming Soon', 'Report a Problem is not yet available.'),
         },
         {
           icon: <Info size={20} color="#6b7280" />,
           label: 'About appmass',
           type: 'navigate',
+          onPress: () => Alert.alert('About appmass', 'appmass v1.0.0\n\nA social media platform built with React Native and Appwrite.'),
         },
       ],
     },
@@ -143,6 +152,14 @@ export function SettingsScreen() {
           label: 'Delete Account',
           type: 'navigate',
           isDestructive: true,
+          onPress: () => Alert.alert(
+            'Delete Account',
+            'Are you sure you want to permanently delete your account? This action cannot be undone.',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Delete', style: 'destructive', onPress: () => Alert.alert('Coming Soon', 'Account deletion is not yet available.') },
+            ]
+          ),
         },
       ],
     },
