@@ -16,15 +16,19 @@ const CARD_H_PADDING = 16;
 const CONTENT_WIDTH = SCREEN_WIDTH - CARD_H_PADDING * 2 - 16;
 
 interface Post {
-  id: string;
-  userId: string;
-  userName: string;
+  $id: string;
+  userId?: string;
+  authorId?: string;
+  userName?: string;
+  authorName?: string;
   userAvatar?: string;
   content: string;
   mediaIds?: string[];
   hashtags?: string[];
-  likesCount: number;
-  commentsCount: number;
+  likesCount?: number;
+  likeCount?: number;
+  commentsCount?: number;
+  commentCount?: number;
   isLiked: boolean;
   isBookmarked: boolean;
   createdAt: string;
@@ -137,19 +141,19 @@ const PostCard: React.FC<PostCardProps> = ({
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.userRow}
-          onPress={() => onUserPress?.(post.userId)}
+          onPress={() => onUserPress?.(post.userId || post.authorId || '')}
           activeOpacity={0.7}
         >
-          <Avatar uri={post.userAvatar} name={post.userName} size={40} />
+          <Avatar uri={post.userAvatar} name={post.userName || post.authorName} size={40} />
           <View style={styles.userInfo}>
-            <Text style={styles.userName}>{post.userName}</Text>
+            <Text style={styles.userName}>{post.userName || post.authorName || 'Unknown'}</Text>
             <Text style={styles.timestamp}>{formatDate(post.createdAt)}</Text>
           </View>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity
-        onPress={() => onPress?.(post.id)}
+        onPress={() => onPress?.(post.$id)}
         activeOpacity={onPress ? 0.7 : 1}
       >
         <Text style={styles.content}>{post.content}</Text>
@@ -161,34 +165,36 @@ const PostCard: React.FC<PostCardProps> = ({
       <View style={styles.actions}>
         <TouchableOpacity
           style={styles.actionBtn}
-          onPress={() => onLike?.(post.id)}
-        >
-          <HeartIcon filled={post.isLiked} />
-          {post.likesCount > 0 && (
-            <Text style={styles.actionCount}>{post.likesCount}</Text>
+          onPress={() => onLike?.(post.$id)}
+          >
+            <HeartIcon filled={post.isLiked} />
+            {post.likeCount ?? post.likesCount > 0 ? (
+              <Text style={styles.actionCount}>{post.likeCount ?? post.likesCount}</Text>
+            ) : null}
           )}
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionBtn}
-          onPress={() => onComment?.(post.id)}
-        >
-          <MessageIcon />
-          {post.commentsCount > 0 && (
-            <Text style={styles.actionCount}>{post.commentsCount}</Text>
+          onPress={() => onComment?.(post.$id)}
+          >
+            <MessageIcon />
+            {post.commentCount ?? post.commentsCount > 0 ? (
+              <Text style={styles.actionCount}>{post.commentCount ?? post.commentsCount}</Text>
+            ) : null}
           )}
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionBtn}
-          onPress={() => onRepost?.(post.id)}
+          onPress={() => onRepost?.(post.$id)}
         >
           <RepeatIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionBtn}
-          onPress={() => onBookmark?.(post.id)}
+          onPress={() => onBookmark?.(post.$id)}
         >
           <BookmarkIcon filled={post.isBookmarked} />
         </TouchableOpacity>

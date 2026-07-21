@@ -20,6 +20,11 @@ interface InputProps {
   maxLength?: number;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   keyboardType?: 'default' | 'email-address' | 'phone-pad';
+  autoCorrect?: boolean;
+  autoComplete?: string;
+  editable?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -34,6 +39,11 @@ const Input: React.FC<InputProps> = ({
   maxLength,
   autoCapitalize = 'none',
   keyboardType = 'default',
+  autoCorrect,
+  autoComplete,
+  editable,
+  onFocus,
+  onBlur,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
@@ -67,8 +77,11 @@ const Input: React.FC<InputProps> = ({
           maxLength={maxLength}
           autoCapitalize={autoCapitalize}
           keyboardType={keyboardType}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={() => { setIsFocused(true); onFocus?.(); }}
+          onBlur={() => { setIsFocused(false); onBlur?.(); }}
+          autoCorrect={autoCorrect}
+          autoComplete={autoComplete as any}
+          editable={editable}
         />
       </TouchableOpacity>
       {error && <Text style={styles.errorText}>{error}</Text>}
