@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -23,7 +22,9 @@ import {
   CheckCheck,
 } from 'lucide-react-native';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
-import { sendChatMessage } from '../../store/slices/chatSlice';
+import { sendChatMessage, fetchMessages } from '../../store/slices/chatSlice';
+import { addMessage } from '../../store/slices/chatSlice';
+import { subscribeToMessages } from '../../services/messaging';
 import { formatDate } from '../../utils/helpers';
 import { ChatStackParamList } from '../../navigation/MainNavigator';
 
@@ -55,16 +56,6 @@ function MessageBubble({ message, isOwn }: { message: any; isOwn: boolean }) {
   );
 }
 
-function TypingIndicator() {
-  return (
-    <View style={[styles.messageRow, styles.receivedRow]}>
-      <View style={[styles.messageBubble, styles.receivedBubble]}>
-        <Text style={styles.typingText}>typing...</Text>
-      </View>
-    </View>
-  );
-}
-
 export function ChatScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ChatStackParamList>>();
   const route = useRoute<RouteProp<ChatStackParamList, 'Chat'>>();
@@ -72,10 +63,28 @@ export function ChatScreen() {
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector((state) => state.chat);
   const [inputText, setInputText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
   const conversationMessages = messages[conversationId] || [];
+
+  useEffect(() => {
+    dispatch(fetchMessages(conversationId));
+  }, [dispatch, conversationId]);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToMessages(conversationId, (msg) => {
+      dispatch(addMessage({ conversationId, message: msg }));
+    });
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, [dispatch, conversationId]);
+
+  useEffect(() => {
+    if (conversationMessages.length > 0) {
+      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
+    }
+  }, [conversationMessages.length]);
 
   const handleSend = useCallback(() => {
     if (!inputText.trim()) return;
@@ -86,11 +95,6 @@ export function ChatScreen() {
   const renderItem = ({ item }: { item: any }) => (
     <MessageBubble message={item} isOwn={item.senderId !== userId} />
   );
-
-  const renderFooter = () => {
-    if (!isTyping) return null;
-    return <TypingIndicator />;
-  };
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -103,7 +107,7 @@ export function ChatScreen() {
             <Text style={styles.headerAvatarText}>U</Text>
           </View>
           <Text style={styles.headerName} numberOfLines={1}>
-            User
+            Chat
           </Text>
         </View>
         <TouchableOpacity style={styles.headerButton}>
@@ -123,8 +127,6 @@ export function ChatScreen() {
           keyExtractor={(item, index) => item.$id || `msg-${index}`}
           contentContainerStyle={styles.messagesList}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={renderFooter}
-          inverted={false}
         />
 
         <View style={styles.inputBar}>
@@ -258,12 +260,6 @@ const styles = StyleSheet.create({
   },
   receivedTime: {
     color: '#9ca3af',
-  },
-  typingText: {
-    fontFamily: 'Poppins_400Regular',
-    fontSize: 14,
-    color: '#6b7280',
-    fontStyle: 'italic',
   },
   inputBar: {
     flexDirection: 'row',

@@ -246,6 +246,21 @@ async function main() {
         { key: 'status_idx', type: 'key', attributes: ['status'] },
       ],
     },
+    {
+      name: 'conversations',
+      collectionId: 'conversations',
+      attributes: [
+        { key: 'creatorId', type: 'string', size: 255, required: true },
+        { key: 'participantId', type: 'string', size: 255, required: true },
+        { key: 'lastMessage', type: 'string', size: 1000, required: false },
+        { key: 'lastMessageAt', type: 'string', size: 50, required: false },
+        { key: 'createdAt', type: 'string', size: 50, required: true },
+      ],
+      indexes: [
+        { key: 'creatorId_idx', type: 'key', attributes: ['creatorId'] },
+        { key: 'participantId_idx', type: 'key', attributes: ['participantId'] },
+      ],
+    },
   ];
 
   // ── Step 3: Create Collections ─────────────────────────────

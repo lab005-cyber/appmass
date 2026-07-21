@@ -8,6 +8,7 @@ import { PostDetailScreen } from '../screens/feed/PostDetailScreen';
 import { CreatePostScreen } from '../screens/feed/CreatePostScreen';
 import { ConversationsScreen } from '../screens/chat/ConversationsScreen';
 import { ChatScreen } from '../screens/chat/ChatScreen';
+import { NewChatScreen } from '../screens/chat/NewChatScreen';
 import { NotificationsScreen } from '../screens/notifications/NotificationsScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { EditProfileScreen } from '../screens/profile/EditProfileScreen';
@@ -37,6 +38,7 @@ export type FeedStackParamList = {
 export type ChatStackParamList = {
   Conversations: undefined;
   Chat: { conversationId: string; userId: string };
+  NewChat: undefined;
   VoiceCall: { userId: string; userName: string; incoming?: boolean };
 };
 
@@ -70,6 +72,7 @@ function ChatNavigator() {
     <ChatStack.Navigator screenOptions={{ headerShown: false }}>
       <ChatStack.Screen name="Conversations" component={ConversationsScreen} />
       <ChatStack.Screen name="Chat" component={ChatScreen} />
+      <ChatStack.Screen name="NewChat" component={NewChatScreen} />
       <ChatStack.Screen name="VoiceCall" component={VoiceCallScreen} />
     </ChatStack.Navigator>
   );

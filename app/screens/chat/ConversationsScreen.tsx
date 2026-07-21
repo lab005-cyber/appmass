@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MessageCircle, Plus } from 'lucide-react-native';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
 import { formatDate } from '../../utils/helpers';
+import { fetchConversations } from '../../store/slices/chatSlice';
 import { ChatStackParamList } from '../../navigation/MainNavigator';
 
 function ConversationItem({
@@ -77,10 +78,15 @@ export function ConversationsScreen() {
   const { conversations, loading } = useAppSelector((state) => state.chat);
   const [refreshing, setRefreshing] = useState(false);
 
+  useEffect(() => {
+    dispatch(fetchConversations());
+  }, [dispatch]);
+
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
+    await dispatch(fetchConversations());
     setRefreshing(false);
-  }, []);
+  }, [dispatch]);
 
   const renderItem = ({ item }: { item: any }) => (
     <ConversationItem
@@ -111,7 +117,7 @@ export function ConversationsScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Chat</Text>
-        <TouchableOpacity style={styles.newChatButton}>
+        <TouchableOpacity style={styles.newChatButton} onPress={() => navigation.navigate('NewChat')}>
           <Plus size={24} color="#c15f3c" />
         </TouchableOpacity>
       </View>
