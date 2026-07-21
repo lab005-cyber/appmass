@@ -21,14 +21,29 @@ import {
   MoreHorizontal,
 } from 'lucide-react-native';
 import { ProfileStackParamList } from '../../navigation/MainNavigator';
+import { useAppSelector } from '../../hooks/useAppDispatch';
 
 type ProfileTab = 'posts' | 'saved' | 'likes';
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
   const route = useRoute<RouteProp<ProfileStackParamList, 'Profile'>>();
   const { userId } = route.params;
+  const currentUser = useAppSelector((state) => state.auth.user);
   const isOwnProfile = !userId;
+  const user = isOwnProfile ? currentUser : null;
+
+  const displayName = user?.name || 'User Name';
+  const username = user?.name
+    ? '@' + user.name.toLowerCase().replace(/\s+/g, '')
+    : '@username';
+  const avatarInitial = displayName ? displayName.charAt(0).toUpperCase() : 'U';
+  const joinDate = user?.registration
+    ? `Joined ${MONTHS[new Date(user.registration).getMonth()]} ${new Date(user.registration).getFullYear()}`
+    : 'Joined January 2024';
+
   const [activeTab, setActiveTab] = useState<ProfileTab>('posts');
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -81,15 +96,15 @@ export function ProfileScreen() {
         <View style={styles.profileInfoSection}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>U</Text>
+              <Text style={styles.avatarText}>{avatarInitial}</Text>
             </View>
           </View>
 
           <View style={styles.nameRow}>
-            <Text style={styles.displayName}>User Name</Text>
+            <Text style={styles.displayName}>{displayName}</Text>
             <BadgeCheck size={20} color="#c15f3c" />
           </View>
-          <Text style={styles.username}>@username</Text>
+          <Text style={styles.username}>{username}</Text>
 
           <Text style={styles.bio}>
             This is the user's bio text. It can be multiple lines and describe
@@ -98,7 +113,7 @@ export function ProfileScreen() {
 
           <View style={styles.joinedRow}>
             <Calendar size={14} color="#6b7280" />
-            <Text style={styles.joinedText}>Joined January 2024</Text>
+            <Text style={styles.joinedText}>{joinDate}</Text>
           </View>
 
           <View style={styles.statsRow}>

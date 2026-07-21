@@ -17,11 +17,15 @@ import { ArrowLeft, Camera } from 'lucide-react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { validateUsername } from '../../utils/helpers';
 import { ProfileStackParamList } from '../../navigation/MainNavigator';
+import { useAppSelector } from '../../hooks/useAppDispatch';
 
 export function EditProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
-  const [displayName, setDisplayName] = useState('User Name');
-  const [username, setUsername] = useState('username');
+  const user = useAppSelector((state) => state.auth.user);
+  const [displayName, setDisplayName] = useState(user?.name || 'User Name');
+  const [username, setUsername] = useState(
+    user?.name ? user.name.toLowerCase().replace(/\s+/g, '') : 'username'
+  );
   const [bio, setBio] = useState('');
   const [website, setWebsite] = useState('');
   const [location, setLocation] = useState('');
