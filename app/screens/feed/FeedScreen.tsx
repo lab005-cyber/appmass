@@ -111,9 +111,9 @@ export function FeedScreen() {
     }
   }, [hasMore, loading, loadFeed]);
 
-  const handleLike = useCallback((postId: string) => {
+  const handleLike = useCallback((postId: string, isLiked: boolean) => {
     if (!user?.$id) return;
-    dispatch(toggleLike({ postId, userId: user.$id }));
+    dispatch(toggleLike({ postId, userId: user.$id, isLiked: isLiked || false }));
   }, [dispatch, user]);
 
   const displayedPosts = activeTab === 'following'
@@ -133,7 +133,7 @@ export function FeedScreen() {
     <PostCard
       post={item}
       onPress={() => navigation.navigate('PostDetail', { postId: item.$id })}
-      onLike={() => handleLike(item.$id)}
+      onLike={() => handleLike(item.$id, item.isLiked)}
     />
   );
 

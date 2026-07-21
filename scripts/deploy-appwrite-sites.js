@@ -16,8 +16,8 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ID = '6a574108002067b4d857';
-const SITE_NAME = 'appmass';
-const BUILD_DIR = 'web-build';
+const SITE_NAME = 'appmasslive';
+const BUILD_DIR = 'dist';
 
 async function main() {
   console.log('\n========================================');
@@ -27,7 +27,7 @@ async function main() {
   // Step 1: Build Expo for web
   console.log('📦 Building Expo web export...');
   try {
-    execSync('npx expo export:web', { stdio: 'inherit', cwd: path.resolve(__dirname, '..') });
+    execSync('npx expo export --platform web', { stdio: 'inherit', cwd: path.resolve(__dirname, '..') });
     console.log('   ✅ Build complete\n');
   } catch (err) {
     console.error('   ❌ Build failed:', err.message);

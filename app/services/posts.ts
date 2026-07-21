@@ -1,4 +1,4 @@
-import { databases, storage } from '../../app/lib/appwrite';
+import { databases, storage } from '../lib/appwrite';
 import { Query, ID } from 'react-native-appwrite';
 
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
@@ -33,6 +33,17 @@ export async function likePost(postId: string, userId: string, reactionType: str
   });
 }
 
-export async function uploadMedia(file: File) {
+export async function unlikePost(postId: string, userId: string) {
+  const likes = await databases.listDocuments(DATABASE_ID, POSTS_COLLECTION_ID + '_likes', [
+    Query.equal('postId', postId),
+    Query.equal('userId', userId),
+    Query.limit(1),
+  ]);
+  if (likes.documents.length > 0) {
+    return databases.deleteDocument(DATABASE_ID, POSTS_COLLECTION_ID + '_likes', likes.documents[0].$id);
+  }
+}
+
+export async function uploadMedia(file: any) {
   return storage.createFile(BUCKET_ID, ID.unique(), file);
 }

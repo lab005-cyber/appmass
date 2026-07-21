@@ -18,7 +18,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAuth } from '../../hooks/useAuth';
 import { extractHashtags } from '../../utils/helpers';
-import { createPost } from '../../services/posts';
+import { createPost, uploadMedia } from '../../services/posts';
 import { FeedStackParamList } from '../../navigation/MainNavigator';
 
 export function CreatePostScreen() {
@@ -106,7 +106,13 @@ export function CreatePostScreen() {
   const handlePost = async () => {
     if (!content.trim() && mediaUris.length === 0) return;
     try {
-      await createPost(content.trim(), mediaUris, detectedHashtags, user?.$id);
+      const mediaIds: string[] = [];
+      for (const uri of mediaUris) {
+        const file = { uri, name: uri.split('/').pop() || 'photo.jpg', type: 'image/jpeg' };
+        const uploaded = await uploadMedia(file);
+        mediaIds.push(uploaded.$id);
+      }
+      await createPost(content.trim(), mediaIds, detectedHashtags, user?.$id);
       navigation.goBack();
     } catch (err: any) {
       Alert.alert('Error', err?.message || 'Failed to create post');

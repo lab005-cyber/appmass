@@ -1,4 +1,4 @@
-import { account } from '../../app/lib/appwrite';
+import { account } from '../lib/appwrite';
 import { ID } from 'react-native-appwrite';
 import { Platform } from 'react-native';
 

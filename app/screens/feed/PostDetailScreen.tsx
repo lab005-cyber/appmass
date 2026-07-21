@@ -140,7 +140,7 @@ export function PostDetailScreen() {
 
       <View style={styles.actionRow}>
           <View style={styles.actionGroup}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => user?.$id && dispatch(toggleLike({ postId, userId: user.$id }))}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => user?.$id && dispatch(toggleLike({ postId, userId: user.$id, isLiked: post.isLiked }))}>
             <Heart size={22} color={post.isLiked ? '#ef4444' : '#6b7280'} />
           </TouchableOpacity>
           <Text style={styles.actionCount}>{post.likeCount || 0}</Text>

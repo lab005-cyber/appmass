@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getFeed, likePost } from '../../services/posts';
+import { getFeed, likePost, unlikePost } from '../../services/posts';
 
 interface FeedState {
   posts: any[];
@@ -27,8 +27,12 @@ export const fetchFeed = createAsyncThunk(
 
 export const toggleLike = createAsyncThunk(
   'feed/like',
-  async ({ postId, userId }: { postId: string; userId: string }) => {
-    await likePost(postId, userId);
+  async ({ postId, userId, isLiked }: { postId: string; userId: string; isLiked: boolean }) => {
+    if (isLiked) {
+      await unlikePost(postId, userId);
+    } else {
+      await likePost(postId, userId);
+    }
     return { postId, userId };
   }
 );

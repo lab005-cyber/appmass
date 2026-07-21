@@ -1,4 +1,4 @@
-import { databases, realtime, messaging } from '../../app/lib/appwrite';
+import { databases, realtime, messaging } from '../lib/appwrite';
 import { ID, Query } from 'react-native-appwrite';
 
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
@@ -29,10 +29,4 @@ export function subscribeToMessages(conversationId: string, callback: (msg: any)
   );
 }
 
-export function subscribeToTyping(conversationId: string, callback: (data: any) => void) {
-  return realtime.subscribe(`conversations.${conversationId}.typing`, callback);
-}
 
-export async function sendTypingIndicator(conversationId: string) {
-  return realtime.send(`conversations.${conversationId}.typing`, { typing: true });
-}

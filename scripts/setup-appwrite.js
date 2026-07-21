@@ -7,7 +7,7 @@
 
 const API_KEY = 'standard_ce4f609771d5df0db7a29903b3d31ac1ec1fd680331c8e691f896ab68638e6f9e295db775b516c028b17d76d9d15d5e072b4405d8631431681d704fba912f83ecc0c20ee059847e7d6591d4372397d5122979941406dc0391a2b60d2076d0c0d44c769d64e71c7a9d8954edd3c7c0ed293115dce273179beaa7998fbbe22d07e';
 const PROJECT_ID = '6a574108002067b4d857';
-const ENDPOINT = 'https://cloud.appwrite.io/v1';
+const ENDPOINT = 'https://sgp.cloud.appwrite.io/v1';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -105,8 +105,8 @@ async function main() {
       ],
     },
     {
-      name: 'post_likes',
-      collectionId: 'post_likes',
+      name: 'posts_likes',
+      collectionId: 'posts_likes',
       attributes: [
         { key: 'postId', type: 'string', size: 255, required: true },
         { key: 'userId', type: 'string', size: 255, required: true },
@@ -119,8 +119,23 @@ async function main() {
       ],
     },
     {
-      name: 'post_comments',
-      collectionId: 'post_comments',
+      name: 'messages',
+      collectionId: 'messages',
+      attributes: [
+        { key: 'conversationId', type: 'string', size: 255, required: true },
+        { key: 'senderId', type: 'string', size: 255, required: true },
+        { key: 'content', type: 'string', size: 5000, required: true },
+        { key: 'read', type: 'boolean', required: true },
+        { key: 'createdAt', type: 'string', size: 50, required: true },
+      ],
+      indexes: [
+        { key: 'conversationId_idx', type: 'key', attributes: ['conversationId'] },
+        { key: 'createdAt_idx', type: 'key', attributes: ['createdAt'] },
+      ],
+    },
+    {
+      name: 'posts_comments',
+      collectionId: 'posts_comments',
       attributes: [
         { key: 'postId', type: 'string', size: 255, required: true },
         { key: 'userId', type: 'string', size: 255, required: true },
