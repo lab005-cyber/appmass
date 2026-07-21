@@ -8,7 +8,14 @@ export function useInfiniteScroll(callback: () => void, hasMore: boolean, loadin
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver((entries) => {
+      const IntersectionObserverImpl =
+        typeof IntersectionObserver !== 'undefined'
+          ? IntersectionObserver
+          : null;
+
+      if (!IntersectionObserverImpl) return;
+
+      observer.current = new IntersectionObserverImpl((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           callback();
         }

@@ -26,8 +26,9 @@ export const startConversation = createAsyncThunk(
 
 export const sendChatMessage = createAsyncThunk(
   'chat/send',
-  async ({ conversationId, content }: { conversationId: string; content: string }) => {
-    return sendMessage(conversationId, content);
+  async ({ conversationId, content }: { conversationId: string; content: string }, { getState }: any) => {
+    const senderId = (getState() as any).auth?.user?.$id;
+    return sendMessage(conversationId, content, senderId);
   }
 );
 

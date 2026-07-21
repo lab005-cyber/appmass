@@ -23,6 +23,7 @@ import {
   CheckCheck,
 } from 'lucide-react-native';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
+import { sendChatMessage } from '../../store/slices/chatSlice';
 import { formatDate } from '../../utils/helpers';
 import { ChatStackParamList } from '../../navigation/MainNavigator';
 
@@ -36,7 +37,7 @@ function MessageBubble({ message, isOwn }: { message: any; isOwn: boolean }) {
           {message.content}
         </Text>
         <View style={styles.messageMeta}>
-          <Text style={styles.messageTime}>
+          <Text style={[styles.messageTime, isOwn ? styles.ownTime : styles.receivedTime]}>
             {formatDate(new Date(message.createdAt || message.timestamp))}
           </Text>
           {isOwn && (
@@ -78,8 +79,9 @@ export function ChatScreen() {
 
   const handleSend = useCallback(() => {
     if (!inputText.trim()) return;
+    dispatch(sendChatMessage({ conversationId, content: inputText.trim() }));
     setInputText('');
-  }, [inputText]);
+  }, [inputText, dispatch, conversationId]);
 
   const renderItem = ({ item }: { item: any }) => (
     <MessageBubble message={item} isOwn={item.senderId !== userId} />
@@ -250,7 +252,12 @@ const styles = StyleSheet.create({
   messageTime: {
     fontFamily: 'Poppins_400Regular',
     fontSize: 11,
+  },
+  ownTime: {
     color: 'rgba(255,255,255,0.7)',
+  },
+  receivedTime: {
+    color: '#9ca3af',
   },
   typingText: {
     fontFamily: 'Poppins_400Regular',

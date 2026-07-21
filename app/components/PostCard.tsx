@@ -85,7 +85,7 @@ const PostCard: React.FC<PostCardProps> = ({
     }
 
     if (mediaCount <= 4) {
-      const cols = mediaCount <= 2 ? 2 : 2;
+      const cols = 2;
       const rows = Math.ceil(mediaCount / cols);
       return (
         <View style={[styles.mediaGrid, { flexDirection: 'row', flexWrap: 'wrap' }]}>

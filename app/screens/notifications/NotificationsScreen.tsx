@@ -49,7 +49,11 @@ function NotificationItem({ item }: { item: any }) {
 
 export function NotificationsScreen() {
   const [activeTab, setActiveTab] = useState<'all' | 'mentions'>('all');
-  const notifications: any[] = [];
+  const [notifications] = useState<any[]>([
+    { $id: '1', type: 'like', username: 'Alice', message: ' liked your post', read: false, createdAt: new Date().toISOString() },
+    { $id: '2', type: 'follow', username: 'Bob', message: ' started following you', read: false, createdAt: new Date(Date.now() - 86400000).toISOString() },
+    { $id: '3', type: 'comment', username: 'Charlie', message: ' commented on your post', read: true, createdAt: new Date(Date.now() - 172800000).toISOString() },
+  ]);
 
   const filteredNotifications =
     activeTab === 'mentions'

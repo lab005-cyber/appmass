@@ -19,10 +19,10 @@ export function CreateStoryScreen() {
 
   const handlePickFromGallery = async () => {
     try {
-      const { launchImageLibraryAsync, MediaTypeOptions } =
+      const { launchImageLibraryAsync } =
         await import('expo-image-picker');
       const result = await launchImageLibraryAsync({
-        mediaTypes: MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         quality: 0.8,
       });
       if (!result.canceled && result.assets.length > 0) {
@@ -35,10 +35,10 @@ export function CreateStoryScreen() {
 
   const handleCapture = async () => {
     try {
-      const { launchCameraAsync, MediaTypeOptions } =
+      const { launchCameraAsync } =
         await import('expo-image-picker');
       const result = await launchCameraAsync({
-        mediaTypes: MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         quality: 0.8,
       });
       if (!result.canceled && result.assets.length > 0) {

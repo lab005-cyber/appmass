@@ -1,12 +1,17 @@
+import { Platform } from 'react-native';
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
 import feedReducer from './slices/feedSlice';
 import chatReducer from './slices/chatSlice';
 import uiReducer from './slices/uiSlice';
 
-const savedOnboarding = typeof window !== 'undefined'
-  ? window.localStorage.getItem('onboardingComplete') === 'true'
-  : false;
+const isWeb = Platform.OS === 'web';
+let savedOnboarding = false;
+if (isWeb) {
+  try {
+    savedOnboarding = window.localStorage.getItem('onboardingComplete') === 'true';
+  } catch {}
+}
 
 export const store = configureStore({
   reducer: {

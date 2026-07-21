@@ -89,7 +89,7 @@ export function ExploreScreen() {
         return (
           <FlatList
             data={[]}
-            renderItem={null}
+            renderItem={() => null}
             keyExtractor={() => 'empty'}
             ListHeaderComponent={
               <>

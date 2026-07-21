@@ -195,7 +195,7 @@ export function VoiceCallScreen() {
               <Volume2 size={24} color="#ffffff" />
             </View>
             <Text style={styles.actionLabel}>
-              {isSpeakerOn ? 'Speaker' : 'Speaker'}
+              {isSpeakerOn ? 'On' : 'Off'}
             </Text>
           </TouchableOpacity>
         </View>

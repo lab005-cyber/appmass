@@ -16,12 +16,15 @@ import { useNavigation } from '@react-navigation/native';
 import { X, Camera, ImageIcon, Plus, MapPin } from 'lucide-react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAuth } from '../../hooks/useAuth';
 import { extractHashtags } from '../../utils/helpers';
+import { createPost } from '../../services/posts';
 import { FeedStackParamList } from '../../navigation/MainNavigator';
 
 export function CreatePostScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<FeedStackParamList>>();
   const dispatch = useAppDispatch();
+  const { user } = useAuth();
   const [content, setContent] = useState('');
   const [mediaUris, setMediaUris] = useState<string[]>([]);
   const [showPoll, setShowPoll] = useState(false);
@@ -100,10 +103,14 @@ export function CreatePostScreen() {
     ]);
   };
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (!content.trim() && mediaUris.length === 0) return;
-    Alert.alert('Post', 'Your post has been created!');
-    navigation.goBack();
+    try {
+      await createPost(content.trim(), mediaUris, detectedHashtags, user?.$id);
+      navigation.goBack();
+    } catch (err: any) {
+      Alert.alert('Error', err?.message || 'Failed to create post');
+    }
   };
 
   return (

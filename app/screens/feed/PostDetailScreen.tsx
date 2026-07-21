@@ -22,7 +22,9 @@ import {
   Bookmark,
   Send,
 } from 'lucide-react-native';
-import { useAppSelector } from '../../hooks/useAppDispatch';
+import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAuth } from '../../hooks/useAuth';
+import { toggleLike } from '../../store/slices/feedSlice';
 import { formatDate } from '../../utils/helpers';
 import { FeedStackParamList } from '../../navigation/MainNavigator';
 
@@ -73,6 +75,8 @@ export function PostDetailScreen() {
   const [commentText, setCommentText] = useState('');
   const inputRef = useRef<TextInput>(null);
 
+  const dispatch = useAppDispatch();
+  const { user } = useAuth();
   const post = useAppSelector((state) =>
     state.feed.posts.find((p: any) => p.$id === postId)
   );
@@ -135,9 +139,9 @@ export function PostDetailScreen() {
       )}
 
       <View style={styles.actionRow}>
-        <View style={styles.actionGroup}>
-          <TouchableOpacity style={styles.actionButton}>
-            <Heart size={22} color="#6b7280" />
+          <View style={styles.actionGroup}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => user?.$id && dispatch(toggleLike({ postId, userId: user.$id }))}>
+            <Heart size={22} color={post.isLiked ? '#ef4444' : '#6b7280'} />
           </TouchableOpacity>
           <Text style={styles.actionCount}>{post.likeCount || 0}</Text>
         </View>

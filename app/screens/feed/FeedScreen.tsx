@@ -15,11 +15,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Heart, MessageSquare, Repeat, Bookmark } from 'lucide-react-native';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
-import { fetchFeed } from '../../store/slices/feedSlice';
+import { useAuth } from '../../hooks/useAuth';
+import { fetchFeed, toggleLike } from '../../store/slices/feedSlice';
 import { formatDate } from '../../utils/helpers';
 import { FeedStackParamList } from '../../navigation/MainNavigator';
 
-function PostCard({ post, onPress }: { post: any; onPress: () => void }) {
+function PostCard({ post, onPress, onLike }: { post: any; onPress: () => void; onLike?: () => void }) {
   return (
     <TouchableOpacity style={styles.postCard} onPress={onPress} activeOpacity={0.95}>
       <View style={styles.postHeader}>
@@ -57,8 +58,8 @@ function PostCard({ post, onPress }: { post: any; onPress: () => void }) {
       )}
 
       <View style={styles.actionRow}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Heart size={20} color="#6b7280" />
+        <TouchableOpacity style={styles.actionButton} onPress={onLike}>
+          <Heart size={20} color={post.isLiked ? '#ef4444' : '#6b7280'} />
           {post.likeCount > 0 && (
             <Text style={styles.actionCount}>{post.likeCount}</Text>
           )}
@@ -83,6 +84,7 @@ function PostCard({ post, onPress }: { post: any; onPress: () => void }) {
 export function FeedScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<FeedStackParamList>>();
   const dispatch = useAppDispatch();
+  const { user } = useAuth();
   const { posts, loading, hasMore, page } = useAppSelector((state) => state.feed);
   const [activeTab, setActiveTab] = useState<'following' | 'foryou'>('foryou');
   const [refreshing, setRefreshing] = useState(false);
@@ -109,6 +111,15 @@ export function FeedScreen() {
     }
   }, [hasMore, loading, loadFeed]);
 
+  const handleLike = useCallback((postId: string) => {
+    if (!user?.$id) return;
+    dispatch(toggleLike({ postId, userId: user.$id }));
+  }, [dispatch, user]);
+
+  const displayedPosts = activeTab === 'following'
+    ? posts.filter((p: any) => p.authorId === user?.$id || false)
+    : posts;
+
   const renderFooter = () => {
     if (!loading) return null;
     return (
@@ -122,6 +133,7 @@ export function FeedScreen() {
     <PostCard
       post={item}
       onPress={() => navigation.navigate('PostDetail', { postId: item.$id })}
+      onLike={() => handleLike(item.$id)}
     />
   );
 
@@ -155,7 +167,7 @@ export function FeedScreen() {
       </View>
 
       <FlatList
-        data={posts}
+        data={displayedPosts}
         renderItem={renderItem}
         keyExtractor={(item) => item.$id}
         contentContainerStyle={styles.listContent}

@@ -13,7 +13,7 @@
     "test:unit": "jest --testPathPattern=tests/unit",
     "test:integration": "jest --testPathPattern=tests/integration",
     "test:e2e": "detox test --configuration android.ci",
-    "build:web": "expo export:web"
+    "build:web": "expo export --platform web"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.3",

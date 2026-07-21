@@ -1,4 +1,4 @@
-import { account } from '../../config/appwrite';
+import { account } from '../../app/lib/appwrite';
 import { ID } from 'react-native-appwrite';
 import { Platform } from 'react-native';
 
@@ -19,7 +19,7 @@ export async function getCurrentUser() {
 }
 
 export async function sendPhoneVerification(phone: string) {
-  return account.createPhoneVerification();
+  return account.createPhoneVerification(phone);
 }
 
 export async function loginWithGoogle() {

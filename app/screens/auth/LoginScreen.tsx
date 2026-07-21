@@ -104,7 +104,7 @@ export function LoginScreen() {
 
             <TouchableOpacity
               style={styles.googleButton}
-              onPress={() => loginWithGoogle()}
+              onPress={async () => { try { await loginWithGoogle(); } catch {} }}
             >
               <Text style={styles.googleIcon}>G</Text>
               <Text style={styles.googleButtonText}>Continue with Google</Text>
